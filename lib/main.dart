@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:vibe/constants/routes.dart';
 import 'package:vibe/services/auth_service.dart';
 import 'package:vibe/views/home_view.dart';
@@ -10,6 +11,7 @@ import 'views/register_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(MaterialApp(
     title: 'Vibe',
     debugShowCheckedModeBanner: false,
@@ -17,7 +19,7 @@ void main() {
     routes: {
       registerRoute: (context) => const RegisterView(),
       loginRoute: (context) => const LoginView(),
-      mobileLayout:(context) => const MobileLayout(),
+      mobileLayout: (context) => const MobileLayout(),
     },
   ));
 }
@@ -36,18 +38,20 @@ class _HomePageState extends State<HomePage> {
     return FutureBuilder(
       future: AuthService.firebase().initialize(),
       builder: (context, snapshot) {
-        switch(snapshot.connectionState){
-
+        switch (snapshot.connectionState) {
           case ConnectionState.done:
-            final user=AuthService.firebase().currentUser;
-            if(user==null){
+            final user = AuthService.firebase().currentUser;
+            if (user == null) {
               return const LoginView();
-            }
-            else{
+            } else {
               return MobileLayout();
             }
           default:
-            return Center(child: CircularProgressIndicator(strokeWidth: 7,backgroundColor: Colors.white70,));
+            return Center(
+                child: CircularProgressIndicator(
+              strokeWidth: 7,
+              backgroundColor: Colors.white70,
+            ));
         }
       },
     );

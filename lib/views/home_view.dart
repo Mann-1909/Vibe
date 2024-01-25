@@ -22,7 +22,10 @@ class _HomeState extends State<Home> {
             ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.black12,
+        backgroundColor: Colors.black,
+      ),
+      body: Center(
+        child: Text("Construction in Progress",style: TextStyle(color:Colors.white),),
       ),
     );
   }

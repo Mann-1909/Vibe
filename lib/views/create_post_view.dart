@@ -30,46 +30,54 @@ class _CreatePostState extends State<CreatePost> {
       child: Scaffold(
         backgroundColor: Colors.white10,
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.black,
           title: const Text(
             "Create Posts",
             style: TextStyle(fontSize: 30, color: Colors.white),
           ),
           centerTitle: true,
         ),
-        body: Column(children: [
-          TextField(
-            controller: textEditingController,
-            keyboardType: TextInputType.multiline,
-            minLines: 4,
-            maxLines: null,
-            style: const TextStyle(color: Colors.white),
-            decoration: const InputDecoration(
-                hintText: "Write Something...", hintStyle: TextStyle(color: Colors.white70)),
-          ),
-          const Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 10)),
-          IconButton(
-              color: Colors.blue,
-              onPressed: () {},
-              icon: const Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Post",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
+        body: Padding(
+          padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+          child: Column(children: [
+            TextField(
+              controller: textEditingController,
+              keyboardType: TextInputType.multiline,
+              minLines: 4,
+              maxLines: null,
+              style: const TextStyle(color: Colors.white),
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(borderSide:BorderSide(color: Colors.white,),borderRadius: BorderRadius.all(Radius.circular(10))),
+                filled: true,
+                fillColor: Colors.black,
+                hintText: "Write Something...",
+                hintStyle: TextStyle(color: Colors.white70),
+              ),
+            ),
+            const Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 10)),
+            IconButton(
+                color: Colors.blue,
+                onPressed: () {},
+                icon: const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Post",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
                     ),
-                  ),
-                  Icon(
-                    Icons.arrow_forward_outlined,
-                    color: Colors.white,
-                  )
-                ],
-              ))
-        ]),
+                    Icon(
+                      Icons.arrow_forward_outlined,
+                      color: Colors.white,
+                    )
+                  ],
+                ))
+          ]),
+        ),
       ),
     );
   }

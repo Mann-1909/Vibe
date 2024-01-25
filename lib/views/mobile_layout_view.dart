@@ -15,15 +15,12 @@ class MobileLayout extends StatefulWidget {
 class _MobileLayoutState extends State<MobileLayout> {
   int _page = 0;
   late PageController pageController;
-  final db=FirebaseFirestore.instance;
-  final user=AuthService.firebase().currentUser;
   void navigationTapped(int page) {
     pageController.jumpToPage(page);
   }
 
   void onPageChanged(int page) {
-    setState(() {
-      _page = page;
+    setState(() {_page = page;
     });
   }
 
