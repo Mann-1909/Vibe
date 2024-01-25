@@ -1,6 +1,6 @@
 # vibe
 
-A simple Social media app that displays text feed.
+A simple Social media app that displays text feed made from Scratch.
 
 ## What have i done?
 -> Login Screen  
