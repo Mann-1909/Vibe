@@ -31,7 +31,6 @@ class _ProfileState extends State<Profile> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Padding(padding: EdgeInsets.fromLTRB(0, 100, 0, 10)),
                 Icon(
                   Icons.account_circle,
                   size: 200,

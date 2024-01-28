@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:vibe/services/auth_service.dart';
 
 class CreatePost extends StatefulWidget {
   const CreatePost({super.key});
@@ -17,11 +19,31 @@ class _CreatePostState extends State<CreatePost> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    textEditingController.dispose();
-    super.dispose();
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   textEditingController.dispose();
+  //   super.dispose();
+  // }
+  Future<void> postMessage() async {
+    if (textEditingController.text.isNotEmpty) {
+      FirebaseFirestore.instance.collection('User Posts').add({
+        'UserEmail': AuthService.firebase().currentUser!.email,
+        'Message': textEditingController.text,
+        'TimeStamp': Timestamp.now()
+      });
+    }
+    final snackBar = SnackBar(
+        backgroundColor: Colors.white10,
+        content: const Text(
+          "Posted Successfully! See Home Section",
+          style: TextStyle(color: Colors.white),
+        ));
+    FocusManager.instance.primaryFocus?.unfocus();
+    await ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    setState(() {
+      textEditingController.clear();
+    });
   }
 
   @override
@@ -47,7 +69,11 @@ class _CreatePostState extends State<CreatePost> {
               maxLines: null,
               style: const TextStyle(color: Colors.white),
               decoration: const InputDecoration(
-                border: OutlineInputBorder(borderSide:BorderSide(color: Colors.white,),borderRadius: BorderRadius.all(Radius.circular(10))),
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
                 filled: true,
                 fillColor: Colors.black,
                 hintText: "Write Something...",
@@ -57,7 +83,7 @@ class _CreatePostState extends State<CreatePost> {
             const Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 10)),
             IconButton(
                 color: Colors.blue,
-                onPressed: () {},
+                onPressed: postMessage,
                 icon: const Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
