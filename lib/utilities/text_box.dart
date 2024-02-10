@@ -24,8 +24,9 @@ class TextBox extends StatelessWidget {
               IconButton(
                   onPressed: onPressed,
                   icon: Icon(
-                    Icons.settings,
+                    Icons.edit,
                     color: Colors.grey,
+                    size: 25,
                   ),
               ),
             ],

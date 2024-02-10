@@ -6,6 +6,7 @@ import 'package:vibe/utilities/edit_field.dart';
 import 'package:vibe/utilities/log_out.dart';
 import 'package:vibe/utilities/show_logout_dialog.dart';
 import 'package:vibe/utilities/text_box.dart';
+import 'package:vibe/views/posts.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -16,7 +17,6 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   String email = AuthService.firebase().currentUser!.email!;
-
 
   @override
   Widget build(BuildContext context) {
@@ -51,24 +51,28 @@ class _ProfileState extends State<Profile> {
                   ),
                   const Padding(
                     padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                    child: Text("My Details", style: TextStyle(color: Colors.white)),
+                    child: Text("My Details",
+                        style: TextStyle(
+                            color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold)),
                   ),
                   //username
                   TextBox(
                     text: userData['username'],
                     sectionName: 'username',
-                    onPressed: () => editField(context,"username"),
+                    onPressed: () => editField(context, "username"),
                   ),
                   TextBox(
                     text: userData['bio'],
                     sectionName: 'bio',
-                    onPressed: () => editField(context,"bio"),
+                    onPressed: () => editField(context, "bio"),
                   ),
                   const Padding(
                     padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                    child: Text("My Posts", style: TextStyle(color: Colors.white)),
+                    child: Text("My Posts",
+                        style: TextStyle(
+                            color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold)),
                   ),
-                  const LogOutBtn()
+                  const LogOutBtn(),
                 ],
               );
             } else if (snapshot.hasError) {

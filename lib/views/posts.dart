@@ -54,7 +54,9 @@ class _PostsState extends State<Posts> {
   @override
   Widget build(BuildContext context) {
     return Container(
+
       decoration: BoxDecoration(
+
         color: widget.user == widget.currentUser ? Colors.white24 : Colors.white10,
         borderRadius: widget.user == widget.currentUser
             ? BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))
@@ -71,6 +73,7 @@ class _PostsState extends State<Posts> {
             Icon(
               Icons.account_circle,
               size: 40,
+
             ),
             Padding(padding: EdgeInsets.fromLTRB(5, 0, 5, 0)),
             Column(
@@ -82,9 +85,13 @@ class _PostsState extends State<Posts> {
                   style: TextStyle(color: Colors.white60, fontSize: 13),
                 ),
                 Padding(padding: EdgeInsets.fromLTRB(0, 2, 0, 2)),
-                Text(
-                  widget.message,
-                  style: TextStyle(color: Colors.white, fontSize: 20),
+                SizedBox(
+                  width: 247,
+                  child: Text(
+                    widget.message,
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                    softWrap: true,
+                  ),
                 ),
                 Padding(padding: EdgeInsets.fromLTRB(0, 3, 0, 3)),
                 Text(

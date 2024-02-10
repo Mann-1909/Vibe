@@ -26,6 +26,18 @@ class _CreatePostState extends State<CreatePost> {
   //   super.dispose();
   // }
   Future<void> postMessage() async {
+    final snackBar = SnackBar(
+        backgroundColor: Colors.white10,
+        content: const Text(
+          "Posted Successfully! See Home Section",
+          style: TextStyle(color: Colors.white),
+        ));final empty = SnackBar(
+        backgroundColor: Colors.white10,
+        content: const Text(
+          "Empty Post! Write Something.",
+          style: TextStyle(color: Colors.white),
+        ));
+    FocusManager.instance.primaryFocus?.unfocus();
     if (textEditingController.text.isNotEmpty) {
       FirebaseFirestore.instance.collection('User Posts').add({
         'UserEmail': AuthService.firebase().currentUser!.email,
@@ -33,15 +45,12 @@ class _CreatePostState extends State<CreatePost> {
         'TimeStamp': Timestamp.now(),
         'Likes':[],
       });
-    }
-    final snackBar = SnackBar(
-        backgroundColor: Colors.white10,
-        content: const Text(
-          "Posted Successfully! See Home Section",
-          style: TextStyle(color: Colors.white),
-        ));
-    FocusManager.instance.primaryFocus?.unfocus();
     await ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+    else{
+    await ScaffoldMessenger.of(context).showSnackBar(empty);
+
+    }
     setState(() {
       textEditingController.clear();
     });
