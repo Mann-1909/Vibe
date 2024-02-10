@@ -11,43 +11,65 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String? currentUser=AuthService.firebase().currentUser!.email;
+  String? currentUser = AuthService.firebase().currentUser!.email;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white12,
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             "Vibe",
             style: TextStyle(
               color: Colors.white,
               fontSize: 40,
             ),
           ),
+          toolbarHeight: 50,
           centerTitle: true,
           backgroundColor: Colors.black,
         ),
+        // floatingActionButton: IconButton(
+        //   onPressed: () {},
+        //   icon: Icon(
+        //     Icons.arrow_upward_rounded,
+        //     size: 60,
+        //     color: Colors.white,
+        //   ),
+        // ),
         body: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection("User Posts")
-              .orderBy('TimeStamp', descending: false)
+              .orderBy('TimeStamp', descending: true)
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return ListView.builder(
-                itemCount: snapshot.data!.docs.length,
-                itemBuilder: (context, index) {
-                  final posts = snapshot.data!.docs[index];
-                  return Posts(
-                    user: posts["UserEmail"]==currentUser?"Me":posts["UserEmail"],
-                    message: posts["Message"], timestamp: posts["TimeStamp"],
-                  );
-                },
-              );
+              if(snapshot.data!.docs.length!=0)
+              {
+                return ListView.builder(
+                  reverse: true,
+                  physics: const BouncingScrollPhysics(decelerationRate: ScrollDecelerationRate.fast),
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    final posts = snapshot.data!.docs[index];
+                    return Posts(
+                      user: posts["UserEmail"],
+                      currentUser: currentUser!,
+                      message: posts["Message"],
+                      timestamp: posts["TimeStamp"],
+                      postId: posts.id,
+                      likes: List<String>.from(posts['Likes'] ?? []),
+                    );
+                  },
+                );
+              }
+              else{
+                return Center(child: const Text("Welcome",style: TextStyle(color: Colors.white,fontSize: 40),));
+              }
             } else if (snapshot.hasError) {
               return Center(child: Text("Error: ${snapshot.error}"));
             } else {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
           },
         ));

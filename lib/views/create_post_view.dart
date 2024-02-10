@@ -30,7 +30,8 @@ class _CreatePostState extends State<CreatePost> {
       FirebaseFirestore.instance.collection('User Posts').add({
         'UserEmail': AuthService.firebase().currentUser!.email,
         'Message': textEditingController.text,
-        'TimeStamp': Timestamp.now()
+        'TimeStamp': Timestamp.now(),
+        'Likes':[],
       });
     }
     final snackBar = SnackBar(

@@ -23,7 +23,6 @@ class _MobileLayoutState extends State<MobileLayout> {
     setState(() {_page = page;
     });
   }
-
   @override
   void initState() {
     // TODO: implement initState

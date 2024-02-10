@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:vibe/firebase_options.dart';
 import 'package:vibe/services/auth_exceptions.dart';
 import 'package:vibe/services/auth_provider.dart';
 import 'package:vibe/services/auth_user.dart';
-import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth, FirebaseAuthException;
+import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth, FirebaseAuthException, UserCredential;
 
 class FirebaseAuthProvider implements AuthProvider {
   @override
@@ -21,7 +22,11 @@ class FirebaseAuthProvider implements AuthProvider {
   }) async {
     // TODO: implement createUser
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential=await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+      await FirebaseFirestore.instance.collection('Users').doc(userCredential.user!.email!).set({
+        'username':userCredential.user!.email!.split('@')[0],
+        'bio':'Empty Bio..',
+      });
       final user = currentUser;
       if (user != null) {
         return user;
